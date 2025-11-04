@@ -2,7 +2,7 @@
 
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { LogOut, User } from "lucide-react";
+import { LogOut, User, Leaf } from "lucide-react"; // Import Leaf icon
 import { showSuccess } from "@/utils/toast";
 
 interface HeaderProps {
@@ -15,14 +15,17 @@ const Header: React.FC<HeaderProps> = ({ onLogout }) => {
   };
 
   return (
-    <header className="bg-white dark:bg-gray-800 shadow-sm py-4 px-6 flex items-center justify-between rounded-lg mb-8">
-      <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-50">CalorieQuest</h1>
+    <header className="bg-gradient-to-r from-blue-600 to-green-500 text-white shadow-lg py-4 px-6 flex items-center justify-between rounded-xl mb-8">
+      <div className="flex items-center space-x-2">
+        <Leaf className="h-7 w-7 text-white" /> {/* Logo icon */}
+        <h1 className="text-3xl font-bold">CalorieQuest</h1>
+      </div>
       <nav className="flex items-center space-x-4">
-        <Button variant="ghost" size="icon" onClick={handleProfileClick} className="text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">
+        <Button variant="ghost" size="icon" onClick={handleProfileClick} className="text-white hover:bg-white/20">
           <User className="h-5 w-5" />
           <span className="sr-only">Profile</span>
         </Button>
-        <Button variant="ghost" size="icon" onClick={onLogout} className="text-red-600 hover:bg-red-50 dark:hover:bg-gray-700">
+        <Button variant="ghost" size="icon" onClick={onLogout} className="text-white hover:bg-white/20">
           <LogOut className="h-5 w-5" />
           <span className="sr-only">Logout</span>
         </Button>
