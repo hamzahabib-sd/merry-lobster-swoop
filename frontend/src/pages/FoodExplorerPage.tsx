@@ -16,12 +16,12 @@ const FoodExplorerPage = () => {
         </p>
 
         <Tabs defaultValue={mockFoodCategories[0].id} className="w-full">
-          <TabsList className="flex flex-wrap justify-center gap-2 mb-8 bg-white/10 border border-white/20 backdrop-blur-sm py-3 px-4 rounded-lg"> {/* Increased padding to py-3 px-4 */}
+          <TabsList className="flex flex-wrap justify-center gap-2 mb-8 bg-white/10 border border-white/20 backdrop-blur-sm py-3 px-4 rounded-lg">
             {mockFoodCategories.map((category) => (
               <TabsTrigger
                 key={category.id}
                 value={category.id}
-                className="text-base font-semibold text-white data-[state=active]:bg-gradient-to-r data-[state=active]:from-green-400 data-[state=active]:to-teal-500 data-[state=active]:text-white data-[state=active]:shadow-lg transition-all duration-200 py-2 px-3 rounded-full flex items-center justify-center" {/* Changed text-lg to text-base and adjusted py/px */}
+                className="text-base font-semibold text-white data-[state=active]:bg-gradient-to-r data-[state=active]:from-green-400 data-[state=active]:to-teal-500 data-[state=active]:text-white data-[state=active]:shadow-lg transition-all duration-200 py-2 px-3 rounded-full flex items-center justify-center"
               >
                 {category.name}
               </TabsTrigger>
