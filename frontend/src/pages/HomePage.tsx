@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { mockRestaurants, Restaurant, MenuItem } from "@/data/mockRestaurants";
 import Header from "@/components/Header";
-import { Leaf } from "lucide-react"; // Import Leaf icon for the welcome screen
+import { Leaf, Salad } from "lucide-react"; // Import Leaf and Salad icons
 
 const HomePage = () => {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null);
@@ -108,11 +108,6 @@ const HomePage = () => {
 
       {/* Adjusted pt-12 to create appropriate space for the sticky header */}
       <div className="pt-12 max-w-2xl mx-auto"> 
-        <div className="text-center mb-8">
-          <p className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-green-400 to-teal-500 bg-clip-text text-transparent leading-tight">
-            "Nourish your body, empower your mind, and thrive."
-          </p>
-        </div>
         <div className="bg-gradient-to-br from-green-50 to-green-100 dark:from-gray-700 dark:to-gray-800 shadow-2xl rounded-xl p-6 mb-8 border border-white/20 dark:border-gray-700/50 backdrop-blur-sm">
           <h2 className="text-2xl font-bold mb-5 text-center text-gray-800 dark:text-gray-100">Find Your Healthy Meal</h2>
 
@@ -199,6 +194,13 @@ const HomePage = () => {
             </Accordion>
           )}
         </div>
+      </div>
+      {/* Motivational quote at the end of the page */}
+      <div className="text-center mt-12 mb-8 flex flex-col items-center justify-center">
+        <Salad className="h-10 w-10 text-green-500 mb-4" />
+        <p className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-green-400 to-teal-500 bg-clip-text text-transparent leading-tight">
+          "Nourish your body, empower your mind, and thrive."
+        </p>
       </div>
     </div>
   );
