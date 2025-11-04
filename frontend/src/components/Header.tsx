@@ -17,7 +17,7 @@ const Header: React.FC<HeaderProps> = ({ onLogout, userStatus }) => {
   };
 
   return (
-    <header className="sticky top-0 z-50 bg-gradient-to-r from-blue-600 to-green-500 text-white shadow-lg py-4 px-6 flex items-center justify-between rounded-xl">
+    <header className="sticky top-0 z-50 bg-gradient-to-r from-blue-600 to-green-500 text-white shadow-lg py-4 px-6 flex items-center justify-between">
       <div className="flex items-center space-x-2">
         <Leaf className="h-7 w-7 text-white" />
         <h1 className="text-3xl font-bold">CalorieQuest</h1>
