@@ -18,9 +18,7 @@ const config = {
       },
     },
     extend: {
-      fontFamily: {
-        'dancing-script': ['"Dancing Script"', 'cursive'],
-      },
+      // Removed 'dancing-script' from fontFamily
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
