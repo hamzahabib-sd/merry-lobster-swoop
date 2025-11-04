@@ -8,7 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { MessageSquare, Send } from "lucide-react";
+import { MessageSquare, Send, Leaf, User, Ruler, Scale, Target, Utensils, MessageSquareDashed } from "lucide-react";
 import { showSuccess, showError } from "@/utils/toast";
 
 interface Message {
@@ -127,95 +127,114 @@ const Chatbot = () => {
             <MessageSquare className="h-6 w-6" />
           </Button>
         </SheetTrigger>
-        <SheetContent className="w-full sm:w-[400px] flex flex-col">
-          <SheetHeader>
-            <SheetTitle>AI Nutrition Chatbot</SheetTitle>
+        <SheetContent className="w-full sm:w-[400px] flex flex-col bg-gradient-to-br from-blue-500 to-purple-600 text-white">
+          <SheetHeader className="mb-4">
+            <SheetTitle className="flex items-center text-white text-2xl font-bold">
+              <Leaf className="h-7 w-7 mr-2" /> AI Nutrition Chatbot
+            </SheetTitle>
           </SheetHeader>
           <div className="flex-1 flex flex-col overflow-hidden">
             {!isProfileComplete ? (
-              <div className="space-y-4 p-4 border rounded-md bg-gray-50 dark:bg-gray-800">
-                <p className="text-sm text-gray-600 dark:text-gray-400">
+              <div className="space-y-4 p-6 rounded-lg shadow-lg bg-white/10">
+                <p className="text-sm text-gray-200">
                   Please provide some details to get personalized advice:
                 </p>
                 <div>
-                  <Label htmlFor="gender">Gender</Label>
-                  <Select
-                    value={userProfile.gender}
-                    onValueChange={(value) => setUserProfile({ ...userProfile, gender: value })}
-                  >
-                    <SelectTrigger id="gender">
-                      <SelectValue placeholder="Select Gender" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="male">Male</SelectItem>
-                      <SelectItem value="female">Female</SelectItem>
-                      <SelectItem value="other">Other</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <Label htmlFor="gender" className="text-white">Gender</Label>
+                  <div className="relative flex items-center">
+                    <Select
+                      value={userProfile.gender}
+                      onValueChange={(value) => setUserProfile({ ...userProfile, gender: value })}
+                    >
+                      <SelectTrigger id="gender" className="pl-10 bg-white/20 text-white border-white/30 focus:ring-offset-0 focus:ring-white/50">
+                        <User className="absolute left-3 h-4 w-4 text-white/70" />
+                        <SelectValue placeholder="Select Gender" />
+                      </SelectTrigger>
+                      <SelectContent className="bg-gray-800 text-white">
+                        <SelectItem value="male">Male</SelectItem>
+                        <SelectItem value="female">Female</SelectItem>
+                        <SelectItem value="other">Other</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
                 </div>
                 <div>
-                  <Label htmlFor="height">Height (cm)</Label>
-                  <Input
-                    id="height"
-                    type="number"
-                    placeholder="e.g., 175"
-                    value={userProfile.height}
-                    onChange={(e) => setUserProfile({ ...userProfile, height: e.target.value })}
-                  />
+                  <Label htmlFor="height" className="text-white">Height (cm)</Label>
+                  <div className="relative flex items-center">
+                    <Input
+                      id="height"
+                      type="number"
+                      placeholder="e.g., 175"
+                      value={userProfile.height}
+                      onChange={(e) => setUserProfile({ ...userProfile, height: e.target.value })}
+                      className="pl-10 bg-white/20 text-white border-white/30 focus:ring-offset-0 focus:ring-white/50 placeholder:text-white/70"
+                    />
+                    <Ruler className="absolute left-3 h-4 w-4 text-white/70" />
+                  </div>
                 </div>
                 <div>
-                  <Label htmlFor="weight">Weight (kg)</Label>
-                  <Input
-                    id="weight"
-                    type="number"
-                    placeholder="e.g., 70"
-                    value={userProfile.weight}
-                    onChange={(e) => setUserProfile({ ...userProfile, weight: e.target.value })}
-                  />
+                  <Label htmlFor="weight" className="text-white">Weight (kg)</Label>
+                  <div className="relative flex items-center">
+                    <Input
+                      id="weight"
+                      type="number"
+                      placeholder="e.g., 70"
+                      value={userProfile.weight}
+                      onChange={(e) => setUserProfile({ ...userProfile, weight: e.target.value })}
+                      className="pl-10 bg-white/20 text-white border-white/30 focus:ring-offset-0 focus:ring-white/50 placeholder:text-white/70"
+                    />
+                    <Scale className="absolute left-3 h-4 w-4 text-white/70" />
+                  </div>
                 </div>
                 <div>
-                  <Label htmlFor="goal">Fitness Goal</Label>
-                  <Select
-                    value={userProfile.goal}
-                    onValueChange={(value) => setUserProfile({ ...userProfile, goal: value })}
-                  >
-                    <SelectTrigger id="goal">
-                      <SelectValue placeholder="Select Goal" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="lose">Lose Weight</SelectItem>
-                      <SelectItem value="gain">Gain Weight</SelectItem>
-                      <SelectItem value="maintain">Maintain Weight</SelectItem>
-                      <SelectItem value="muscle">Build Muscle</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <Label htmlFor="goal" className="text-white">Fitness Goal</Label>
+                  <div className="relative flex items-center">
+                    <Select
+                      value={userProfile.goal}
+                      onValueChange={(value) => setUserProfile({ ...userProfile, goal: value })}
+                    >
+                      <SelectTrigger id="goal" className="pl-10 bg-white/20 text-white border-white/30 focus:ring-offset-0 focus:ring-white/50">
+                        <Target className="absolute left-3 h-4 w-4 text-white/70" />
+                        <SelectValue placeholder="Select Goal" />
+                      </SelectTrigger>
+                      <SelectContent className="bg-gray-800 text-white">
+                        <SelectItem value="lose">Lose Weight</SelectItem>
+                        <SelectItem value="gain">Gain Weight</SelectItem>
+                        <SelectItem value="maintain">Maintain Weight</SelectItem>
+                        <SelectItem value="muscle">Build Muscle</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
                 </div>
                 <div>
-                  <Label htmlFor="dietPlan">Preferred Diet Plan</Label>
-                  <Select
-                    value={userProfile.dietPlan}
-                    onValueChange={(value) => setUserProfile({ ...userProfile, dietPlan: value })}
-                  >
-                    <SelectTrigger id="dietPlan">
-                      <SelectValue placeholder="Select Diet Plan" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="none">None</SelectItem>
-                      <SelectItem value="vegetarian">Vegetarian</SelectItem>
-                      <SelectItem value="vegan">Vegan</SelectItem>
-                      <SelectItem value="keto">Keto</SelectItem>
-                      <SelectItem value="paleo">Paleo</SelectItem>
-                      <SelectItem value="mediterranean">Mediterranean</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <Label htmlFor="dietPlan" className="text-white">Preferred Diet Plan</Label>
+                  <div className="relative flex items-center">
+                    <Select
+                      value={userProfile.dietPlan}
+                      onValueChange={(value) => setUserProfile({ ...userProfile, dietPlan: value })}
+                    >
+                      <SelectTrigger id="dietPlan" className="pl-10 bg-white/20 text-white border-white/30 focus:ring-offset-0 focus:ring-white/50">
+                        <Utensils className="absolute left-3 h-4 w-4 text-white/70" />
+                        <SelectValue placeholder="Select Diet Plan" />
+                      </SelectTrigger>
+                      <SelectContent className="bg-gray-800 text-white">
+                        <SelectItem value="none">None</SelectItem>
+                        <SelectItem value="vegetarian">Vegetarian</SelectItem>
+                        <SelectItem value="vegan">Vegan</SelectItem>
+                        <SelectItem value="keto">Keto</SelectItem>
+                        <SelectItem value="paleo">Paleo</SelectItem>
+                        <SelectItem value="mediterranean">Mediterranean</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
                 </div>
-                <Button onClick={handleProfileSubmit} className="w-full bg-green-600 hover:bg-green-700">
+                <Button onClick={handleProfileSubmit} className="w-full bg-gradient-to-r from-green-500 to-teal-600 hover:from-green-600 hover:to-teal-700 text-white text-lg py-3 rounded-lg shadow-md">
                   Save Profile & Start Chat
                 </Button>
               </div>
             ) : (
               <>
-                <ScrollArea className="flex-1 p-4 border rounded-md bg-gray-50 dark:bg-gray-800 mb-4">
+                <ScrollArea className="flex-1 p-4 rounded-md bg-white/10 mb-4">
                   <div className="space-y-4">
                     {messages.map((msg, index) => (
                       <div
@@ -225,8 +244,8 @@ const Chatbot = () => {
                         <div
                           className={`max-w-[70%] p-3 rounded-lg ${
                             msg.sender === "user"
-                              ? "bg-blue-500 text-white"
-                              : "bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-50"
+                              ? "bg-blue-400 text-white"
+                              : "bg-white/20 text-white"
                           }`}
                         >
                           {msg.text}
@@ -234,9 +253,10 @@ const Chatbot = () => {
                       </div>
                     ))}
                     {isTyping && (
-                      <div className="flex justify-start">
-                        <div className="max-w-[70%] p-3 rounded-lg bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-50">
-                          <span className="animate-pulse">...</span>
+                      <div className="flex justify-start items-center">
+                        <div className="max-w-[70%] p-3 rounded-lg bg-white/20 text-white flex items-center space-x-2">
+                          <MessageSquareDashed className="h-4 w-4 animate-pulse" />
+                          <span>Typing...</span>
                         </div>
                       </div>
                     )}
@@ -253,9 +273,9 @@ const Chatbot = () => {
                         handleSendMessage();
                       }
                     }}
-                    className="flex-1"
+                    className="flex-1 bg-white/20 text-white border-white/30 focus:ring-offset-0 focus:ring-white/50 placeholder:text-white/70"
                   />
-                  <Button onClick={handleSendMessage} size="icon" disabled={isTyping}>
+                  <Button onClick={handleSendMessage} size="icon" disabled={isTyping} className="bg-gradient-to-r from-green-500 to-teal-600 hover:from-green-600 hover:to-teal-700 text-white">
                     <Send className="h-4 w-4" />
                   </Button>
                 </div>
