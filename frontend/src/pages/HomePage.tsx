@@ -108,6 +108,11 @@ const HomePage = () => {
 
       {/* Adjusted pt-12 to create appropriate space for the sticky header */}
       <div className="pt-12 max-w-2xl mx-auto"> 
+        <div className="text-center mb-8">
+          <p className="font-dancing-script text-4xl sm:text-5xl font-bold bg-gradient-to-r from-green-400 to-teal-500 bg-clip-text text-transparent leading-tight">
+            "Nourish your body, empower your mind, and thrive."
+          </p>
+        </div>
         <div className="bg-gradient-to-br from-green-50 to-green-100 dark:from-gray-700 dark:to-gray-800 shadow-2xl rounded-xl p-6 mb-8 border border-white/20 dark:border-gray-700/50 backdrop-blur-sm">
           <h2 className="text-2xl font-bold mb-5 text-center text-gray-800 dark:text-gray-100">Find Your Healthy Meal</h2>
 
