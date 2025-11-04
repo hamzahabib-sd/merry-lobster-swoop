@@ -16,7 +16,7 @@ const FoodExplorerPage = () => {
         </p>
 
         <Tabs defaultValue={mockFoodCategories[0].id} className="w-full">
-          <TabsList className="sticky top-0 z-20 flex flex-wrap justify-center gap-2 mb-8 bg-white/10 border border-white/20 backdrop-blur-sm p-2 rounded-lg"> {/* Changed to flex flex-wrap justify-center */}
+          <TabsList className="sticky top-0 z-20 flex flex-wrap justify-center gap-2 mb-8 bg-white/10 border border-white/20 backdrop-blur-sm py-4 px-2 rounded-lg"> {/* Increased vertical padding (py-4) */}
             {mockFoodCategories.map((category) => (
               <TabsTrigger
                 key={category.id}
