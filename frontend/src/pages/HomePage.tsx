@@ -196,9 +196,9 @@ const HomePage = () => {
         </div>
       </div>
       {/* Motivational quote at the end of the page */}
-      <div className="text-center mt-12 mb-8 flex flex-col items-center justify-center">
-        <Salad className="h-10 w-10 text-green-500 mb-4" />
-        <p className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-green-400 to-teal-500 bg-clip-text text-transparent leading-tight">
+      <div className="text-center mt-12 mb-8 flex flex-col items-center justify-center max-w-md mx-auto bg-gradient-to-br from-green-50 to-green-100 dark:from-gray-700 dark:to-gray-800 shadow-2xl rounded-xl p-6 border border-white/20 dark:border-gray-700/50 backdrop-blur-sm">
+        <Salad className="h-6 w-6 text-green-500 mb-2" />
+        <p className="text-lg sm:text-xl font-bold bg-gradient-to-r from-green-400 to-teal-500 bg-clip-text text-transparent leading-tight">
           "Nourish your body, empower your mind, and thrive."
         </p>
       </div>
