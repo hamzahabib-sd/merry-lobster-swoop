@@ -122,7 +122,7 @@ const Chatbot = () => {
           <Button
             variant="default"
             size="icon"
-            className="fixed bottom-4 right-4 rounded-full h-14 w-14 shadow-lg bg-blue-600 hover:bg-blue-700 z-50"
+            className="fixed bottom-4 right-4 rounded-full h-14 w-14 shadow-lg bg-gradient-to-r from-green-500 to-teal-600 hover:from-green-600 hover:to-teal-700 text-white z-50"
           >
             <MessageSquare className="h-6 w-6" />
           </Button>
