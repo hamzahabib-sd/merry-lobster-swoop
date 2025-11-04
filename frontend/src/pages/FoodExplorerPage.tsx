@@ -16,12 +16,12 @@ const FoodExplorerPage = () => {
         </p>
 
         <Tabs defaultValue={mockFoodCategories[0].id} className="w-full">
-          <TabsList className="flex flex-wrap justify-center gap-2 mb-8 bg-white/10 border border-white/20 backdrop-blur-sm p-2 rounded-lg"> {/* Re-added TabsList, removed sticky, kept flex-wrap */}
+          <TabsList className="flex flex-wrap justify-center gap-2 mb-8 bg-white/10 border border-white/20 backdrop-blur-sm py-3 px-4 rounded-lg"> {/* Increased padding to py-3 px-4 */}
             {mockFoodCategories.map((category) => (
               <TabsTrigger
                 key={category.id}
                 value={category.id}
-                className="text-lg font-semibold text-white data-[state=active]:bg-gradient-to-r data-[state=active]:from-green-400 data-[state=active]:to-teal-500 data-[state=active]:text-white data-[state=active]:shadow-lg transition-all duration-200 py-3 px-4 rounded-full flex items-center justify-center"
+                className="text-base font-semibold text-white data-[state=active]:bg-gradient-to-r data-[state=active]:from-green-400 data-[state=active]:to-teal-500 data-[state=active]:text-white data-[state=active]:shadow-lg transition-all duration-200 py-2 px-3 rounded-full flex items-center justify-center" {/* Changed text-lg to text-base and adjusted py/px */}
               >
                 {category.name}
               </TabsTrigger>
@@ -29,7 +29,7 @@ const FoodExplorerPage = () => {
           </TabsList>
 
           {mockFoodCategories.map((category) => (
-            <TabsContent key={category.id} value={category.id} className="pt-4"> {/* Adjusted padding-top to pt-4 */}
+            <TabsContent key={category.id} value={category.id} className="pt-4">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {category.items.map((item: FoodItem) => (
                   <Card key={item.id} className="bg-white/10 border-white/20 text-white shadow-xl backdrop-blur-sm overflow-hidden">
