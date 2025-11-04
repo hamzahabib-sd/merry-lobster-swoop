@@ -22,38 +22,47 @@ const Header: React.FC<HeaderProps> = ({ onLogout, userStatus }) => {
         <Leaf className="h-7 w-7 text-white" />
         <h1 className="text-3xl font-bold">CalorieQuest</h1>
       </div>
-      {userStatus && ( // Only show navigation and user actions if userStatus is set
-        <nav className="flex items-center space-x-4">
-          <NavLink
-            to="/"
-            className={({ isActive }) =>
-              `px-3 py-2 rounded-md text-lg font-medium transition-colors ${
-                isActive ? "bg-white/30" : "hover:bg-white/20"
-              } text-white`
-            }
-          >
-            Home
+      <nav className="flex items-center space-x-4">
+        <NavLink
+          to="/"
+          className={({ isActive }) =>
+            `px-3 py-2 rounded-md text-lg font-medium transition-colors ${
+              isActive ? "bg-white/30" : "hover:bg-white/20"
+            } text-white`
+          }
+        >
+          Home
+        </NavLink>
+        {userStatus && ( // Show Find Meal, Profile, Logout only if userStatus is set
+          <>
+            <NavLink
+              to="/find-meal"
+              className={({ isActive }) =>
+                `px-3 py-2 rounded-md text-lg font-medium transition-colors ${
+                  isActive ? "bg-white/30" : "hover:bg-white/20"
+                } text-white`
+              }
+            >
+              Find Meal
+            </NavLink>
+            <Button variant="ghost" size="icon" onClick={handleProfileClick} className="text-white hover:bg-white/20">
+              <User className="h-5 w-5" />
+              <span className="sr-only">Profile</span>
+            </Button>
+            <Button variant="ghost" size="icon" onClick={onLogout} className="text-white hover:bg-white/20">
+              <LogOut className="h-5 w-5" />
+              <span className="sr-only">Logout</span>
+            </Button>
+          </>
+        )}
+        {!userStatus && ( // Show Sign In / Sign Up button if userStatus is null
+          <NavLink to="/auth">
+            <Button className="bg-white text-blue-700 hover:bg-gray-100 text-lg py-2 px-4 rounded-lg shadow-md">
+              Sign In / Sign Up
+            </Button>
           </NavLink>
-          <NavLink
-            to="/find-meal"
-            className={({ isActive }) =>
-              `px-3 py-2 rounded-md text-lg font-medium transition-colors ${
-                isActive ? "bg-white/30" : "hover:bg-white/20"
-              } text-white`
-            }
-          >
-            Find Meal
-          </NavLink>
-          <Button variant="ghost" size="icon" onClick={handleProfileClick} className="text-white hover:bg-white/20">
-            <User className="h-5 w-5" />
-            <span className="sr-only">Profile</span>
-          </Button>
-          <Button variant="ghost" size="icon" onClick={onLogout} className="text-white hover:bg-white/20">
-            <LogOut className="h-5 w-5" />
-            <span className="sr-only">Logout</span>
-          </Button>
-        </nav>
-      )}
+        )}
+      </nav>
     </header>
   );
 };
