@@ -108,7 +108,7 @@ const HomePage = () => {
 
       {/* Adjusted pt-12 to create appropriate space for the sticky header */}
       <div className="pt-12 max-w-2xl mx-auto"> 
-        <div className="bg-white/90 dark:bg-gray-800/90 shadow-2xl rounded-xl p-6 mb-8 border border-white/20 dark:border-gray-700/50 backdrop-blur-sm hover:shadow-3xl hover:scale-[1.01] transition-all duration-300">
+        <div className="bg-gradient-to-br from-green-50 to-green-100 dark:from-gray-700 dark:to-gray-800 shadow-2xl rounded-xl p-6 mb-8 border border-white/20 dark:border-gray-700/50 backdrop-blur-sm">
           <h2 className="text-2xl font-bold mb-5 text-center text-gray-800 dark:text-gray-100">Find Your Healthy Meal</h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
@@ -170,13 +170,13 @@ const HomePage = () => {
             <Accordion type="single" collapsible className="w-full space-y-3">
               {filteredRestaurants.map((restaurant) => (
                 <AccordionItem key={restaurant.id} value={restaurant.id} className="border-none">
-                  <AccordionTrigger className="flex justify-between items-center p-4 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-xl shadow-md transition-all duration-200">
+                  <AccordionTrigger className="flex justify-between items-center p-4 bg-gradient-to-br from-green-50 to-green-100 dark:from-gray-700 dark:to-gray-800 shadow-lg rounded-xl border border-white/20 dark:border-gray-700/50">
                     <span className="font-semibold text-xl text-gray-800 dark:text-gray-100">{restaurant.name}</span>
                     <span className="text-md text-gray-600 dark:text-gray-300">
                       {restaurant.menu.length} items ({restaurant.distance} miles)
                     </span>
                   </AccordionTrigger>
-                  <AccordionContent className="p-4 bg-white dark:bg-gray-800 rounded-b-xl shadow-inner border-t border-gray-100 dark:border-gray-700">
+                  <AccordionContent className="p-4 bg-gradient-to-br from-green-50 to-green-100 dark:from-gray-700 dark:to-gray-800 rounded-b-xl shadow-lg border border-white/20 dark:border-gray-700/50 -mt-2 pt-6">
                     <ul className="space-y-3">
                       {restaurant.menu.map((item: MenuItem) => (
                         <li key={item.id} className="flex justify-between items-center border-b border-gray-100 dark:border-gray-700 pb-3 last:border-b-0 last:pb-0">
