@@ -5,7 +5,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { mockRestaurants, Restaurant, MenuItem } from "@/data/mockRestaurants";
-import { MadeWithDyad } from "@/components/made-with-dyad";
+import Header from "@/components/Header"; // Import Header
 
 const HomePage = () => {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null);
@@ -37,6 +37,13 @@ const HomePage = () => {
   const handleContinueAsGuest = () => {
     localStorage.setItem("caloriequest_user_status", "guest");
     setIsLoggedIn(true);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("caloriequest_user_status");
+    setIsLoggedIn(false);
+    setCalorieRange(null); // Reset filters on logout
+    setFilteredRestaurants([]); // Clear results
   };
 
   const applyFilters = () => {
@@ -89,14 +96,13 @@ const HomePage = () => {
             Continue as Guest
           </Button>
         </div>
-        <MadeWithDyad />
       </div>
     );
   }
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-50 p-4 sm:p-6 lg:p-8">
-      <h1 className="text-3xl font-bold mb-6 text-center">CalorieQuest</h1>
+      <Header onLogout={handleLogout} /> {/* Add the Header component */}
 
       <div className="max-w-2xl mx-auto bg-white dark:bg-gray-800 shadow-lg rounded-lg p-6 mb-8">
         <h2 className="text-xl font-semibold mb-4">Find Your Healthy Meal</h2>
@@ -184,7 +190,6 @@ const HomePage = () => {
           </Accordion>
         )}
       </div>
-      <MadeWithDyad />
     </div>
   );
 };

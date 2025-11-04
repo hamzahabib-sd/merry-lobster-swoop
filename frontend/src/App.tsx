@@ -6,7 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import NotFound from "./pages/NotFound";
 import { MadeWithDyad } from "./components/made-with-dyad";
-import Chatbot from "./components/Chatbot"; // Import Chatbot
+import Chatbot from "./components/Chatbot";
 
 const queryClient = new QueryClient();
 
@@ -22,7 +22,8 @@ const App = () => (
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
-      <Chatbot /> {/* Add the Chatbot component here */}
+      <Chatbot />
+      <MadeWithDyad /> {/* MadeWithDyad moved here to be a global footer */}
     </TooltipProvider>
   </QueryClientProvider>
 );
