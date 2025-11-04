@@ -92,8 +92,8 @@ const HomePage = () => {
           </Button>
           <Button
             onClick={handleContinueAsGuest}
-            variant="outline"
-            className="w-full border-white text-white hover:bg-white/20 text-lg py-3 rounded-lg shadow-md"
+            // Removed variant="outline" and explicitly set transparent background
+            className="w-full bg-transparent border border-white text-white hover:bg-white/20 text-lg py-3 rounded-lg shadow-md"
           >
             Continue as Guest
           </Button>
