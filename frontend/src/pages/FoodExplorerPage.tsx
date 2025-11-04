@@ -7,7 +7,7 @@ import { Leaf } from "lucide-react";
 const FoodExplorerPage = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-600 to-purple-700 text-white p-4 sm:p-8">
-      <div className="max-w-6xl mx-auto pt-8 pb-4"> {/* Adjusted padding */}
+      <div className="max-w-6xl mx-auto pt-8 pb-4">
         <h2 className="text-4xl font-bold text-center mb-10 drop-shadow-md flex items-center justify-center">
           <Leaf className="h-10 w-10 text-green-300 mr-3" /> Food Explorer
         </h2>
@@ -16,12 +16,12 @@ const FoodExplorerPage = () => {
         </p>
 
         <Tabs defaultValue={mockFoodCategories[0].id} className="w-full">
-          <TabsList className="sticky top-0 z-20 grid w-full grid-cols-2 md:grid-cols-4 gap-2 mb-8 bg-white/10 border border-white/20 backdrop-blur-sm p-2 rounded-lg"> {/* Added sticky, z-index, and padding */}
+          <TabsList className="sticky top-0 z-20 flex flex-wrap justify-center gap-2 mb-8 bg-white/10 border border-white/20 backdrop-blur-sm p-2 rounded-lg"> {/* Changed to flex flex-wrap justify-center */}
             {mockFoodCategories.map((category) => (
               <TabsTrigger
                 key={category.id}
                 value={category.id}
-                className="text-lg font-semibold text-white data-[state=active]:bg-gradient-to-r data-[state=active]:from-green-400 data-[state=active]:to-teal-500 data-[state=active]:text-white data-[state=active]:shadow-lg transition-all duration-200 py-3 px-4 rounded-full flex items-center justify-center" // Improved styling
+                className="text-lg font-semibold text-white data-[state=active]:bg-gradient-to-r data-[state=active]:from-green-400 data-[state=active]:to-teal-500 data-[state=active]:text-white data-[state=active]:shadow-lg transition-all duration-200 py-3 px-4 rounded-full flex items-center justify-center"
               >
                 {category.name}
               </TabsTrigger>
@@ -29,7 +29,7 @@ const FoodExplorerPage = () => {
           </TabsList>
 
           {mockFoodCategories.map((category) => (
-            <TabsContent key={category.id} value={category.id} className="pt-20"> {/* Added top padding to prevent content hiding under sticky tabs */}
+            <TabsContent key={category.id} value={category.id} className="pt-20">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {category.items.map((item: FoodItem) => (
                   <Card key={item.id} className="bg-white/10 border-white/20 text-white shadow-xl backdrop-blur-sm overflow-hidden">
