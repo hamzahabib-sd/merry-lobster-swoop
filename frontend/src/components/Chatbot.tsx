@@ -127,7 +127,7 @@ const Chatbot = () => {
             <MessageSquare className="h-6 w-6" />
           </Button>
         </SheetTrigger>
-        <SheetContent className="w-full sm:w-[400px] flex flex-col bg-gradient-to-br from-blue-500 to-purple-600 text-white">
+        <SheetContent className="w-full sm:w-[400px] flex flex-col bg-gradient-to-br from-blue-500 to-purple-600 text-white border-none">
           <SheetHeader className="mb-4">
             <SheetTitle className="flex items-center text-white text-2xl font-bold">
               <Leaf className="h-7 w-7 mr-2" /> AI Nutrition Chatbot
