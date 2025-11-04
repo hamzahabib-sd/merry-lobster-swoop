@@ -106,8 +106,8 @@ const HomePage = () => {
     <div className="min-h-screen bg-gradient-to-br from-blue-600 to-purple-700 text-gray-900 dark:text-gray-50 p-4 sm:p-6 lg:p-8">
       <Header onLogout={handleLogout} />
 
-      {/* Added pt-24 to create space for the sticky header */}
-      <div className="pt-24 max-w-2xl mx-auto"> 
+      {/* Adjusted pt-12 to create appropriate space for the sticky header */}
+      <div className="pt-12 max-w-2xl mx-auto"> 
         <div className="bg-white dark:bg-gray-800 shadow-xl rounded-xl p-6 mb-8 border border-gray-200 dark:border-gray-700">
           <h2 className="text-2xl font-bold mb-5 text-center text-gray-800 dark:text-gray-100">Find Your Healthy Meal</h2>
 
