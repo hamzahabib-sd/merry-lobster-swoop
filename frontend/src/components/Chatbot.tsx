@@ -146,7 +146,7 @@ const Chatbot = () => {
                       value={userProfile.gender}
                       onValueChange={(value) => setUserProfile({ ...userProfile, gender: value })}
                     >
-                      <SelectTrigger id="gender" className="pl-10 bg-white/20 text-white border-white/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-0">
+                      <SelectTrigger id="gender" className="pl-10 bg-white/20 text-white border-white/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-0">
                         <User className="absolute left-3 h-4 w-4 text-white/70" />
                         <SelectValue placeholder="Select Gender" />
                       </SelectTrigger>
@@ -167,7 +167,7 @@ const Chatbot = () => {
                       placeholder="e.g., 175"
                       value={userProfile.height}
                       onChange={(e) => setUserProfile({ ...userProfile, height: e.target.value })}
-                      className="pl-10 bg-white/20 text-white border-white/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-0 placeholder:text-white/70"
+                      className="pl-10 bg-white/20 text-white border-white/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-0 placeholder:text-white/70"
                     />
                     <Ruler className="absolute left-3 h-4 w-4 text-white/70" />
                   </div>
@@ -181,7 +181,7 @@ const Chatbot = () => {
                       placeholder="e.g., 70"
                       value={userProfile.weight}
                       onChange={(e) => setUserProfile({ ...userProfile, weight: e.target.value })}
-                      className="pl-10 bg-white/20 text-white border-white/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-0 placeholder:text-white/70"
+                      className="pl-10 bg-white/20 text-white border-white/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-0 placeholder:text-white/70"
                     />
                     <Scale className="absolute left-3 h-4 w-4 text-white/70" />
                   </div>
@@ -193,7 +193,7 @@ const Chatbot = () => {
                       value={userProfile.goal}
                       onValueChange={(value) => setUserProfile({ ...userProfile, goal: value })}
                     >
-                      <SelectTrigger id="goal" className="pl-10 bg-white/20 text-white border-white/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-0">
+                      <SelectTrigger id="goal" className="pl-10 bg-white/20 text-white border-white/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-0">
                         <Target className="absolute left-3 h-4 w-4 text-white/70" />
                         <SelectValue placeholder="Select Goal" />
                       </SelectTrigger>
@@ -213,7 +213,7 @@ const Chatbot = () => {
                       value={userProfile.dietPlan}
                       onValueChange={(value) => setUserProfile({ ...userProfile, dietPlan: value })}
                     >
-                      <SelectTrigger id="dietPlan" className="pl-10 bg-white/20 text-white border-white/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-0">
+                      <SelectTrigger id="dietPlan" className="pl-10 bg-white/20 text-white border-white/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-0">
                         <Utensils className="absolute left-3 h-4 w-4 text-white/70" />
                         <SelectValue placeholder="Select Diet Plan" />
                       </SelectTrigger>
@@ -273,7 +273,7 @@ const Chatbot = () => {
                         handleSendMessage();
                       }
                     }}
-                    className="flex-1 bg-white/20 text-white border-white/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-0 placeholder:text-white/70"
+                    className="flex-1 bg-white/20 text-white border-white/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-0 placeholder:text-white/70"
                   />
                   <Button onClick={handleSendMessage} size="icon" disabled={isTyping} className="bg-gradient-to-r from-green-500 to-teal-600 hover:from-green-600 hover:to-teal-700 text-white">
                     <Send className="h-4 w-4" />
