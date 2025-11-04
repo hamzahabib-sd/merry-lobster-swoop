@@ -23,16 +23,18 @@ const Header: React.FC<HeaderProps> = ({ onLogout, userStatus }) => {
         <h1 className="text-3xl font-bold">CalorieQuest</h1>
       </div>
       <nav className="flex items-center space-x-4">
-        <NavLink
-          to="/"
-          className={({ isActive }) =>
-            `px-3 py-2 rounded-md text-lg font-medium transition-colors ${
-              isActive ? "bg-white/30" : "hover:bg-white/20"
-            } text-white`
-          }
-        >
-          Home
-        </NavLink>
+        {!userStatus && ( // Show Home link only if userStatus is null (not logged in)
+          <NavLink
+            to="/"
+            className={({ isActive }) =>
+              `px-3 py-2 rounded-md text-lg font-medium transition-colors ${
+                isActive ? "bg-white/30" : "hover:bg-white/20"
+              } text-white`
+            }
+          >
+            Home
+          </NavLink>
+        )}
         {userStatus && ( // Show Find Meal, Profile, Logout only if userStatus is set
           <>
             <NavLink
