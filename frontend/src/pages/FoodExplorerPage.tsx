@@ -21,7 +21,7 @@ const FoodExplorerPage = () => {
               <TabsTrigger
                 key={category.id}
                 value={category.id}
-                className="text-base font-semibold text-white data-[state=active]:bg-gradient-to-r data-[state=active]:from-green-400 data-[state=active]:to-teal-500 data-[state=active]:text-white data-[state=active]:shadow-lg transition-all duration-200 py-2 px-2 rounded-full flex items-center justify-center" {/* Changed px-3 to px-2 */}
+                className="text-base font-semibold text-white data-[state=active]:bg-gradient-to-r data-[state=active]:from-green-400 data-[state=active]:to-teal-500 data-[state=active]:text-white data-[state=active]:shadow-lg transition-all duration-200 py-2 px-2 rounded-full flex items-center justify-center"
               >
                 {category.name}
               </TabsTrigger>
