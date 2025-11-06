@@ -26,6 +26,7 @@ app = FastAPI()
 # CORS Middleware
 origins = [
     "http://localhost:5173",
+    "https://merry-lobster-swoop.onrender.com",
 ]
 
 app.add_middleware(
