@@ -6,7 +6,6 @@ python-jose[cryptography]
 passlib[bcrypt]
 argon2-cffi
 sqlalchemy
-pydantic[email]==2.5.3
-python-multipart==0.0.9
-email-validator==2.1.1
-bcrypt
+pydantic[email]
+python-multipart
+email-validator
