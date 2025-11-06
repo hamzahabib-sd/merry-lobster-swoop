@@ -1,5 +1,6 @@
 # Python
 __pycache__/
 *.pyc
-.env
 venv/
+config.bat
+node_modules

@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/form";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "sonner";
+import { API_URL } from "@/utils/constants";
 
 const signUpSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }),
@@ -46,8 +47,8 @@ const AuthPage: React.FC<AuthPageProps> = ({ setUserStatus }) => {
 
   const handleAuthAction = async (values: any) => {
     const url = isSigningUp
-      ? "https://backend-re9n.onrender.com/api/v1/auth/signup"
-      : "https://backend-re9n.onrender.com/api/v1/auth/login";
+      ? `${API_URL}/api/v1/auth/signup`
+      : `${API_URL}/api/v1/auth/login`;
     const method = "POST";
     const body = isSigningUp
       ? JSON.stringify(values)

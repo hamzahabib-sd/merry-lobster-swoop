@@ -10,6 +10,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { MessageSquare, Send, Leaf, User, Ruler, Scale, Target, Utensils, MessageSquareDashed } from "lucide-react";
 import { showSuccess, showError } from "@/utils/toast";
+import { API_URL } from "@/utils/constants";
 
 interface Message {
   sender: "user" | "ai";
@@ -48,7 +49,7 @@ const Chatbot = () => {
       const token = localStorage.getItem("token");
       if (token) {
         try {
-          const response = await fetch("https://backend-re9n.onrender.com/api/v1/chatbot/profile", {
+          const response = await fetch(`${API_URL}/api/v1/chatbot/profile`, {
             headers: {
               Authorization: `Bearer ${token}`,
             },
@@ -137,7 +138,7 @@ const Chatbot = () => {
     const { name, ...profileData } = userProfile;
     if (Object.values(profileData).every((val) => val && val.toString().trim() !== "")) {
       try {
-        const response = await fetch("https://backend-re9n.onrender.com/api/v1/chatbot/profile", {
+        const response = await fetch(`${API_URL}/api/v1/chatbot/profile`, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
@@ -177,7 +178,7 @@ const Chatbot = () => {
 
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch("https://backend-re9n.onrender.com/api/v1/chatbot", {
+      const response = await fetch(`${API_URL}/api/v1/chatbot`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
