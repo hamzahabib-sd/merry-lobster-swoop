@@ -1,0 +1,27 @@
+services:
+  - type: web
+    name: backend
+    env: python
+    region: oregon
+    plan: free
+    build_command: |
+      cd backend
+      ./render-build.sh
+    start_command: |
+      cd backend
+      uvicorn main:app --host 0.0.0.0 --port 8000
+    env_vars:
+      - key: PYTHON_VERSION
+        value: 3.11.6
+  - type: web
+    name: frontend
+    env: node
+    region: oregon
+    plan: free
+    build_command: |
+      cd frontend
+      npm install
+      npm run build
+    start_command: |
+      cd frontend
+      npm run preview
