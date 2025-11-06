@@ -47,16 +47,6 @@ const Header: React.FC<HeaderProps> = ({ onLogout, userStatus }) => {
             >
               Find Meal
             </NavLink>
-            <NavLink
-              to="/food-explorer"
-              className={({ isActive }) =>
-                `px-3 py-2 rounded-md text-lg font-medium transition-colors ${
-                  isActive ? "bg-white/30" : "hover:bg-white/20"
-                } text-white`
-              }
-            >
-              Food Explorer
-            </NavLink>
             <Button variant="ghost" size="icon" onClick={handleProfileClick} className="text-white hover:bg-white/20">
               <User className="h-5 w-5" />
               <span className="sr-only">Profile</span>

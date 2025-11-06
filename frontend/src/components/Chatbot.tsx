@@ -17,11 +17,13 @@ interface Message {
 }
 
 interface UserProfile {
+  name: string;
+  age: string;
   gender: string;
   height: string;
   weight: string;
-  goal: string;
-  dietPlan: string;
+  fitness_goal: string;
+  dietary_preferences: string;
 }
 
 const Chatbot = () => {
@@ -29,27 +31,94 @@ const Chatbot = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [userProfile, setUserProfile] = useState<UserProfile>({
+    name: "",
+    age: "",
     gender: "",
     height: "",
     weight: "",
-    goal: "",
-    dietPlan: "",
+    fitness_goal: "",
+    dietary_preferences: "",
   });
   const [isProfileComplete, setIsProfileComplete] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Load profile from localStorage
-    const savedProfile = localStorage.getItem("chatbot_user_profile");
-    if (savedProfile) {
-      setUserProfile(JSON.parse(savedProfile));
-      setIsProfileComplete(true);
-      setMessages([{ sender: "ai", text: "Welcome back! How can I help you with your nutrition today?" }]);
-    } else {
-      setMessages([{ sender: "ai", text: "Hello! To give you personalized advice, please tell me a bit about yourself." }]);
+    const fetchProfile = async () => {
+      const token = localStorage.getItem("token");
+      if (token) {
+        try {
+          const response = await fetch("http://localhost:8000/api/v1/chatbot/profile", {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          if (response.ok) {
+            const profileData = await response.json();
+            setUserProfile({
+              ...profileData,
+              fitness_goal: profileData.fitness_goal || "",
+              dietary_preferences:
+                (profileData.dietary_preferences &&
+                  (Array.isArray(profileData.dietary_preferences)
+                    ? profileData.dietary_preferences
+                    : profileData.dietary_preferences)) ||
+                "",
+            });
+            // Check if essential profile data is present
+            if (profileData.weight && profileData.height && profileData.age && profileData.fitness_goal) {
+              setIsProfileComplete(true);
+              setMessages([
+                {
+                  sender: "ai",
+                  text: "Welcome back! How can I help you with your nutrition today?",
+                },
+              ]);
+            } else {
+              setIsProfileComplete(false);
+              setMessages([
+                {
+                  sender: "ai",
+                  text: "Hello! To give you personalized advice, please tell me a bit about yourself.",
+                },
+              ]);
+            }
+          } else {
+            // Profile not found or other error, show profile form
+            setIsProfileComplete(false);
+            setMessages([
+              {
+                sender: "ai",
+                text: "Hello! To give you personalized advice, please tell me a bit about yourself.",
+              },
+            ]);
+          }
+        } catch (error) {
+          console.error("Failed to fetch profile:", error);
+          setIsProfileComplete(false);
+          setMessages([
+            {
+              sender: "ai",
+              text: "Hello! I'm having trouble loading your profile. Please fill out the form to get started.",
+            },
+          ]);
+        }
+      } else {
+        // No token, user is not logged in
+        setIsProfileComplete(false);
+        setMessages([
+          {
+            sender: "ai",
+            text: "Hello! To give you personalized advice, please tell me a bit about yourself.",
+          },
+        ]);
+      }
+    };
+
+    if (isOpen) {
+      fetchProfile();
     }
-  }, []);
+  }, [isOpen]);
 
   useEffect(() => {
     if (messagesEndRef.current) {
@@ -57,45 +126,45 @@ const Chatbot = () => {
     }
   }, [messages]);
 
-  const handleProfileSubmit = () => {
-    if (Object.values(userProfile).every((val) => val !== "")) {
-      localStorage.setItem("chatbot_user_profile", JSON.stringify(userProfile));
-      setIsProfileComplete(true);
-      setMessages([
-        { sender: "ai", text: "Thank you! Your profile is set. How can I help you with your nutrition today?" },
-      ]);
-      showSuccess("Profile saved successfully!");
+  const handleProfileSubmit = async () => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      showError("You must be logged in to save your profile.");
+      return;
+    }
+
+    // Omitting name from the check as it's not in the form
+    const { name, ...profileData } = userProfile;
+    if (Object.values(profileData).every((val) => val && val.toString().trim() !== "")) {
+      try {
+        const response = await fetch("http://localhost:8000/api/v1/chatbot/profile", {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            ...profileData,
+            dietary_preferences: [profileData.dietary_preferences],
+          }),
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json().catch(() => ({ detail: "Failed to save profile." }));
+          throw new Error(errorData.detail);
+        }
+
+        const result = await response.json();
+        setIsProfileComplete(true);
+        setMessages([{ sender: "ai", text: "Your profile has been updated! How can I help you with your nutrition today?" }]);
+        showSuccess("Profile saved successfully!");
+      } catch (error) {
+        console.error("Error saving profile:", error);
+        showError((error as Error).message || "Failed to save profile. Please try again.");
+      }
     } else {
       showError("Please fill in all profile details.");
     }
-  };
-
-  const generateMockAIResponse = (userMessage: string, profile: UserProfile): string => {
-    const lowerCaseMessage = userMessage.toLowerCase();
-
-    if (lowerCaseMessage.includes("calories in an omelet") || lowerCaseMessage.includes("omelet calories")) {
-      return "A typical 2-egg omelet with some veggies is around 150-200 calories, depending on ingredients and cooking oil. Adding cheese or meat will increase this.";
-    }
-    if (lowerCaseMessage.includes("lose weight")) {
-      return `To lose weight, ${profile.gender === "male" ? "you" : "you"} should aim for a calorie deficit. Focus on lean proteins, whole grains, and plenty of vegetables. Given your goal to ${profile.goal}, consider incorporating more cardio and strength training.`;
-    }
-    if (lowerCaseMessage.includes("gain weight")) {
-      return `To gain weight, ${profile.gender === "male" ? "you" : "you"} need a calorie surplus with adequate protein. Focus on nutrient-dense foods like nuts, avocados, and healthy fats. Given your goal to ${profile.goal}, ensure you're consuming enough protein for muscle growth.`;
-    }
-    if (lowerCaseMessage.includes("healthy snack")) {
-      return "Great healthy snack options include a handful of almonds, an apple with peanut butter, Greek yogurt, or carrot sticks with hummus.";
-    }
-    if (lowerCaseMessage.includes("protein")) {
-      return "Protein is crucial for muscle repair and growth. Good sources include chicken, fish, beans, lentils, and dairy. For your weight of ${profile.weight} lbs, aiming for around 0.7-1 gram of protein per pound of body weight is often recommended, especially if you're active.";
-    }
-    if (lowerCaseMessage.includes("diet plan")) {
-      return `You mentioned your preferred diet plan is ${profile.dietPlan}. Sticking to this plan while ensuring a balanced intake of macronutrients and micronutrients is key. Would you like to know more about specific foods within your diet plan?`;
-    }
-    if (lowerCaseMessage.includes("thank you") || lowerCaseMessage.includes("thanks")) {
-      return "You're welcome! Is there anything else I can assist you with?";
-    }
-
-    return "I'm a mock nutrition chatbot and can answer basic questions about calories, weight goals, and healthy eating. Please ask me something specific about nutrition!";
   };
 
   const handleSendMessage = async () => {
@@ -106,13 +175,37 @@ const Chatbot = () => {
     setInput("");
     setIsTyping(true);
 
-    // Simulate API call delay
-    await new Promise((resolve) => setTimeout(resolve, 1500));
+    try {
+      const token = localStorage.getItem("token");
+      const response = await fetch("http://localhost:8000/api/v1/chatbot", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          message: newUserMessage.text,
+          profile: userProfile,
+        }),
+      });
 
-    const aiResponseText = generateMockAIResponse(newUserMessage.text, userProfile);
-    const newAiMessage: Message = { sender: "ai", text: aiResponseText };
-    setMessages((prev) => [...prev, newAiMessage]);
-    setIsTyping(false);
+      if (!response.ok) {
+        throw new Error("API response was not ok.");
+      }
+
+      const result = await response.json();
+      const newAiMessage: Message = { sender: "ai", text: result.reply };
+      setMessages((prev) => [...prev, newAiMessage]);
+    } catch (error) {
+      console.error("Error fetching AI response:", error);
+      const errorMessage: Message = {
+        sender: "ai",
+        text: "Sorry, I'm having trouble connecting. Please try again later.",
+      };
+      setMessages((prev) => [...prev, errorMessage]);
+    } finally {
+      setIsTyping(false);
+    }
   };
 
   return (
@@ -159,6 +252,20 @@ const Chatbot = () => {
                   </div>
                 </div>
                 <div>
+                  <Label htmlFor="age" className="text-white">Age</Label>
+                  <div className="relative flex items-center">
+                    <Input
+                      id="age"
+                      type="number"
+                      placeholder="e.g., 25"
+                      value={userProfile.age}
+                      onChange={(e) => setUserProfile({ ...userProfile, age: e.target.value })}
+                      className="pl-10 bg-white/20 text-white border-white/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-0 placeholder:text-white/70"
+                    />
+                    <User className="absolute left-3 h-4 w-4 text-white/70" />
+                  </div>
+                </div>
+                <div>
                   <Label htmlFor="height" className="text-white">Height (cm)</Label>
                   <div className="relative flex items-center">
                     <Input
@@ -187,13 +294,13 @@ const Chatbot = () => {
                   </div>
                 </div>
                 <div>
-                  <Label htmlFor="goal" className="text-white">Fitness Goal</Label>
+                  <Label htmlFor="fitness_goal" className="text-white">Fitness Goal</Label>
                   <div className="relative flex items-center">
                     <Select
-                      value={userProfile.goal}
-                      onValueChange={(value) => setUserProfile({ ...userProfile, goal: value })}
+                      value={userProfile.fitness_goal}
+                      onValueChange={(value) => setUserProfile({ ...userProfile, fitness_goal: value })}
                     >
-                      <SelectTrigger id="goal" className="pl-10 bg-white/20 text-white border-white/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-0">
+                      <SelectTrigger id="fitness_goal" className="pl-10 bg-white/20 text-white border-white/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-0">
                         <Target className="absolute left-3 h-4 w-4 text-white/70" />
                         <SelectValue placeholder="Select Goal" />
                       </SelectTrigger>
@@ -207,13 +314,13 @@ const Chatbot = () => {
                   </div>
                 </div>
                 <div>
-                  <Label htmlFor="dietPlan" className="text-white">Preferred Diet Plan</Label>
+                  <Label htmlFor="dietary_preferences" className="text-white">Preferred Diet Plan</Label>
                   <div className="relative flex items-center">
                     <Select
-                      value={userProfile.dietPlan}
-                      onValueChange={(value) => setUserProfile({ ...userProfile, dietPlan: value })}
+                      value={userProfile.dietary_preferences}
+                      onValueChange={(value) => setUserProfile({ ...userProfile, dietary_preferences: value })}
                     >
-                      <SelectTrigger id="dietPlan" className="pl-10 bg-white/20 text-white border-white/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-0">
+                      <SelectTrigger id="dietary_preferences" className="pl-10 bg-white/20 text-white border-white/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-0">
                         <Utensils className="absolute left-3 h-4 w-4 text-white/70" />
                         <SelectValue placeholder="Select Diet Plan" />
                       </SelectTrigger>

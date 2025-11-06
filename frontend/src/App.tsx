@@ -6,7 +6,6 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import HomePage from "./pages/HomePage"; // New static home page
 import AuthPage from "./pages/AuthPage"; // Renamed from HomePage
 import FindMealPage from "./pages/FindMealPage";
-import FoodExplorerPage from "./pages/FoodExplorerPage"; // New Food Explorer page
 import NotFound from "./pages/NotFound";
 import { MadeWithDyad } from "./components/made-with-dyad";
 import Chatbot from "./components/Chatbot";
@@ -42,7 +41,6 @@ const App = () => {
             
             {/* If user is not logged in, redirect from Find Meal and Food Explorer to Auth */}
             <Route path="/find-meal" element={userStatus ? <FindMealPage /> : <Navigate to="/auth" />} />
-            <Route path="/food-explorer" element={userStatus ? <FoodExplorerPage /> : <Navigate to="/auth" />} />
             
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />

@@ -1,56 +1,94 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { mockRestaurants, Restaurant, MenuItem } from "@/data/mockRestaurants";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { Salad } from "lucide-react";
+import { toast } from "sonner";
+
+// Define the types right in the component file
+export interface MenuItem {
+  id: string;
+  name: string;
+  description: string;
+  calories: number;
+}
+
+export interface Restaurant {
+  id: string;
+  name: string;
+  distance: number;
+  menu: MenuItem[];
+}
 
 const FindMealPage = () => {
   const [calorieRange, setCalorieRange] = useState<number | null>(null);
   const [mileage, setMileage] = useState<number>(3); // Default to 3 miles
   const [filteredRestaurants, setFilteredRestaurants] = useState<Restaurant[]>([]);
+  const [hasSearched, setHasSearched] = useState(false);
 
-  useEffect(() => {
-    // Apply filters initially and whenever calorieRange or mileage changes
-    applyFilters();
-  }, [calorieRange, mileage]);
-
-  const applyFilters = () => {
-    let tempRestaurants = mockRestaurants.filter(
-      (restaurant) => restaurant.distance <= mileage
-    );
-
-    if (calorieRange !== null) {
-      tempRestaurants = tempRestaurants
-        .map((restaurant) => {
-          const qualifyingMenu = restaurant.menu.filter(
-            (item) => item.calories <= calorieRange
-          );
-          return { ...restaurant, menu: qualifyingMenu };
-        })
-        .filter((restaurant) => restaurant.menu.length > 0);
+  const handleSearch = async () => {
+    if (calorieRange === null) {
+      toast.error("Please select a calorie range before searching.");
+      return;
     }
 
-    setFilteredRestaurants(tempRestaurants);
+    try {
+      const url = new URL("http://localhost:8000/api/v1/restaurants");
+      if (calorieRange !== null && calorieRange !== 9999) {
+        url.searchParams.append("max_calories", calorieRange.toString());
+      }
+      url.searchParams.append("max_distance", mileage.toString());
+
+      const response = await fetch(url.toString());
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data: Restaurant[] = await response.json();
+      setFilteredRestaurants(data);
+      setHasSearched(true);
+    } catch (error) {
+      console.error("Failed to fetch restaurants:", error);
+      toast.error("Failed to fetch restaurants. Please try again later.");
+    }
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-600 to-purple-700 text-gray-900 dark:text-gray-50 p-4 sm:p-6 lg:p-8">
-      {/* Adjusted pt-12 to create appropriate space for the sticky header */}
-      <div className="pt-12 max-w-2xl mx-auto"> 
+      <div className="pt-12 max-w-2xl mx-auto">
         <div className="bg-gradient-to-br from-green-50 to-green-100 dark:from-gray-700 dark:to-gray-800 shadow-2xl rounded-xl p-6 mb-8 border border-white/20 dark:border-gray-700/50 backdrop-blur-sm">
-          <h2 className="text-2xl font-bold mb-5 text-center text-gray-800 dark:text-gray-100">Find Your Healthy Meal</h2>
+          <h2 className="text-2xl font-bold mb-5 text-center text-gray-800 dark:text-gray-100">
+            Find Your Healthy Meal
+          </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
             <div>
-              <Label htmlFor="calorie-range" className="mb-2 block text-gray-700 dark:text-gray-300 font-medium">Calorie Range</Label>
+              <Label
+                htmlFor="calorie-range"
+                className="mb-2 block text-gray-700 dark:text-gray-300 font-medium"
+              >
+                Calorie Range
+              </Label>
               <Select
                 onValueChange={(value) => setCalorieRange(Number(value))}
                 value={calorieRange?.toString() || ""}
               >
-                <SelectTrigger id="calorie-range" className="bg-gray-50 dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-50">
+                <SelectTrigger
+                  id="calorie-range"
+                  className="bg-gray-50 dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-50"
+                >
                   <SelectValue placeholder="Select Max Calories" />
                 </SelectTrigger>
                 <SelectContent className="bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-50">
@@ -62,61 +100,101 @@ const FindMealPage = () => {
             </div>
 
             <div>
-              <Label className="mb-2 block text-gray-700 dark:text-gray-300 font-medium">Distance (Miles)</Label>
+              <Label className="mb-2 block text-gray-700 dark:text-gray-300 font-medium">
+                Distance (Miles)
+              </Label>
               <RadioGroup
                 defaultValue="3"
                 onValueChange={(value) => setMileage(Number(value))}
                 className="flex space-x-4 p-2 bg-gray-50 dark:bg-gray-700 rounded-md border border-gray-300 dark:border-gray-600"
               >
                 <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="1" id="r1" className="text-blue-600 dark:text-blue-400" />
-                  <Label htmlFor="r1" className="text-gray-800 dark:text-gray-50">1 Mile</Label>
+                  <RadioGroupItem
+                    value="1"
+                    id="r1"
+                    className="text-blue-600 dark:text-blue-400"
+                  />
+                  <Label htmlFor="r1" className="text-gray-800 dark:text-gray-50">
+                    1 Mile
+                  </Label>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="3" id="r2" className="text-blue-600 dark:text-blue-400" />
-                  <Label htmlFor="r2" className="text-gray-800 dark:text-gray-50">3 Miles</Label>
+                  <RadioGroupItem
+                    value="3"
+                    id="r2"
+                    className="text-blue-600 dark:text-blue-400"
+                  />
+                  <Label htmlFor="r2" className="text-gray-800 dark:text-gray-50">
+                    3 Miles
+                  </Label>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="5" id="r3" className="text-blue-600 dark:text-blue-400" />
-                  <Label htmlFor="r3" className="text-gray-800 dark:text-gray-50">5 Miles</Label>
+                  <RadioGroupItem
+                    value="5"
+                    id="r3"
+                    className="text-blue-600 dark:text-blue-400"
+                  />
+                  <Label htmlFor="r3" className="text-gray-800 dark:text-gray-50">
+                    5 Miles
+                  </Label>
                 </div>
               </RadioGroup>
             </div>
           </div>
 
-          <Button onClick={applyFilters} className="w-full bg-gradient-to-r from-green-500 to-teal-600 hover:from-green-600 hover:to-teal-700 text-white text-lg py-3 rounded-lg shadow-md">
+          <Button
+            onClick={handleSearch}
+            className="w-full bg-gradient-to-r from-green-500 to-teal-600 hover:from-green-600 hover:to-teal-700 text-white text-lg py-3 rounded-lg shadow-md"
+          >
             Search for Meals
           </Button>
         </div>
 
         <div className="max-w-2xl mx-auto">
-          {filteredRestaurants.length === 0 && calorieRange !== null ? (
-            <p className="text-center text-gray-600 dark:text-gray-400 text-lg">
-              No restaurants found matching your criteria. Try adjusting your filters!
-            </p>
-          ) : filteredRestaurants.length === 0 && calorieRange === null ? (
-            <p className="text-center text-gray-600 dark:text-gray-400 text-lg">
+          {!hasSearched ? (
+            <p className="text-center text-white text-lg">
               Set your calorie range and distance to find nearby healthy meals.
+            </p>
+          ) : filteredRestaurants.length === 0 ? (
+            <p className="text-center text-white text-lg">
+              No restaurants found matching your criteria. Try adjusting your
+              filters!
             </p>
           ) : (
             <Accordion type="single" collapsible className="w-full space-y-3">
               {filteredRestaurants.map((restaurant) => (
-                <AccordionItem key={restaurant.id} value={restaurant.id} className="border-none">
+                <AccordionItem
+                  key={restaurant.id}
+                  value={restaurant.id}
+                  className="border-none"
+                >
                   <AccordionTrigger className="flex justify-between items-center p-4 bg-gradient-to-br from-green-50 to-green-100 dark:from-gray-700 dark:to-gray-800 shadow-lg rounded-xl border border-white/20 dark:border-gray-700/50">
-                    <span className="font-semibold text-xl text-gray-800 dark:text-gray-100">{restaurant.name}</span>
+                    <span className="font-semibold text-xl text-gray-800 dark:text-gray-100">
+                      {restaurant.name}
+                    </span>
                     <span className="text-md text-gray-600 dark:text-gray-300">
-                      {restaurant.menu.length} items ({restaurant.distance} miles)
+                      {restaurant.menu.length} items ({restaurant.distance}{" "}
+                      miles)
                     </span>
                   </AccordionTrigger>
                   <AccordionContent className="p-4 bg-gradient-to-br from-green-50 to-green-100 dark:from-gray-700 dark:to-gray-800 rounded-b-xl shadow-lg border border-white/20 dark:border-gray-700/50 -mt-2 pt-6">
                     <ul className="space-y-3">
                       {restaurant.menu.map((item: MenuItem) => (
-                        <li key={item.id} className="flex justify-between items-center border-b border-gray-100 dark:border-gray-700 pb-3 last:border-b-0 last:pb-0">
+                        <li
+                          key={item.id}
+                          className="flex justify-between items-center border-b border-gray-100 dark:border-gray-700 pb-3 last:border-b-0 last:pb-0"
+                        >
                           <div>
-                            <p className="font-medium text-gray-800 dark:text-gray-100">{item.name}</p>
-                            <p className="text-sm text-gray-600 dark:text-gray-400">{item.description}</p>
+                            <p className="font-medium text-gray-800 dark:text-gray-100">
+                              {item.name}
+                            </p>
+                            <p className="text-sm text-gray-600 dark:text-gray-400">
+                              {item.description}
+                            </p>
                           </div>
-                          <span className="font-bold text-green-600 dark:text-green-400 text-lg">{item.calories} kcal</span>
+                          <span className="font-bold text-green-600 dark:text-green-400 text-lg">
+                            {item.calories} kcal
+                          </span>
                         </li>
                       ))}
                     </ul>
@@ -127,14 +205,15 @@ const FindMealPage = () => {
           )}
         </div>
       </div>
-      {/* Motivational quote at the end of the page */}
       <div className="relative mt-12 mb-8 max-w-2xl mx-auto bg-gradient-to-br from-green-50 to-green-100 dark:from-gray-700 dark:to-gray-800 shadow-2xl rounded-xl py-4 px-6 border border-white/20 dark:border-gray-700/50 backdrop-blur-sm overflow-hidden">
         <p className="text-center mx-auto text-base sm:text-lg font-bold bg-gradient-to-r from-green-400 to-teal-500 bg-clip-text text-transparent leading-tight whitespace-nowrap overflow-hidden text-ellipsis pr-16 mb-2">
           "Nourish your body, empower your mind, and thrive."
         </p>
         <div className="absolute bottom-2 right-2 flex items-center space-x-1">
           <Salad className="h-4 w-4 text-green-500" />
-          <span className="text-xs text-gray-600 dark:text-gray-400">CalorieQuest</span>
+          <span className="text-xs text-gray-600 dark:text-gray-400">
+            CalorieQuest
+          </span>
         </div>
       </div>
     </div>

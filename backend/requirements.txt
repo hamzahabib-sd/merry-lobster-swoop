@@ -1,0 +1,8 @@
+fastapi
+uvicorn[standard]
+pymongo
+python-dotenv
+python-jose[cryptography]
+passlib[bcrypt]
+argon2-cffi
+sqlalchemy
