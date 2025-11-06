@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { API_URL } from "@/utils/constants";
 import { Button } from "@/components/ui/button";
 import {
   Select,
@@ -46,7 +47,7 @@ const FindMealPage = () => {
     }
 
     try {
-      const url = new URL("https://backend-re9n.onrender.com/api/v1/restaurants");
+      const url = new URL(`${API_URL}/api/v1/restaurants`);
       if (calorieRange !== null && calorieRange !== 9999) {
         url.searchParams.append("max_calories", calorieRange.toString());
       }
