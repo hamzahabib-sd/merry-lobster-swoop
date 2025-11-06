@@ -7,3 +7,6 @@ passlib[bcrypt]
 argon2-cffi
 sqlalchemy
 pydantic[email]
+python-multipart
+email-validator
+bcrypt
