@@ -6,3 +6,4 @@ python-jose[cryptography]
 passlib[bcrypt]
 argon2-cffi
 sqlalchemy
+pydantic[email]

@@ -46,8 +46,8 @@ const AuthPage: React.FC<AuthPageProps> = ({ setUserStatus }) => {
 
   const handleAuthAction = async (values: any) => {
     const url = isSigningUp
-      ? "http://localhost:8000/api/v1/auth/signup"
-      : "http://localhost:8000/api/v1/auth/login";
+      ? "https://backend-re9n.onrender.com/api/v1/auth/signup"
+      : "https://backend-re9n.onrender.com/api/v1/auth/login";
     const method = "POST";
     const body = isSigningUp
       ? JSON.stringify(values)

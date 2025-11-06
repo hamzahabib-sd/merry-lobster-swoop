@@ -46,7 +46,7 @@ const FindMealPage = () => {
     }
 
     try {
-      const url = new URL("http://localhost:8000/api/v1/restaurants");
+      const url = new URL("https://backend-re9n.onrender.com/api/v1/restaurants");
       if (calorieRange !== null && calorieRange !== 9999) {
         url.searchParams.append("max_calories", calorieRange.toString());
       }

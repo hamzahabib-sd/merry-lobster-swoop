@@ -48,7 +48,7 @@ const Chatbot = () => {
       const token = localStorage.getItem("token");
       if (token) {
         try {
-          const response = await fetch("http://localhost:8000/api/v1/chatbot/profile", {
+          const response = await fetch("https://backend-re9n.onrender.com/api/v1/chatbot/profile", {
             headers: {
               Authorization: `Bearer ${token}`,
             },
@@ -137,7 +137,7 @@ const Chatbot = () => {
     const { name, ...profileData } = userProfile;
     if (Object.values(profileData).every((val) => val && val.toString().trim() !== "")) {
       try {
-        const response = await fetch("http://localhost:8000/api/v1/chatbot/profile", {
+        const response = await fetch("https://backend-re9n.onrender.com/api/v1/chatbot/profile", {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
@@ -177,7 +177,7 @@ const Chatbot = () => {
 
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch("http://localhost:8000/api/v1/chatbot", {
+      const response = await fetch("https://backend-re9n.onrender.com/api/v1/chatbot", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
